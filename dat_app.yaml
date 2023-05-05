@@ -1,26 +1,67 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: my-app-pod
+  name: shortenerapp
 spec:
-  containers:
-  - name: redis
-    image: redis:latest
-    ports:
-    - containerPort: 6379
-    volumeMounts:
-    - name: data
-      mountPath: /data
-  - name: rails
-    image: my-rails-app:latest
-    ports:
-    - containerPort: 3000
-    env:
-    - name: REDIS_URL
-      value: redis://redis:6379/0
-    volumeMounts:
-    - name: data
-      mountPath: /data
-  volumes:
-  - name: data
-    emptyDir: {}
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shortenerapp
+  template:
+    metadata:
+      labels:
+        app: shortenerapp
+    spec:
+      containers:
+        - name: shortenerapp
+          image: shortener
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shortenerapp
+spec:
+  selector:
+    app: shortenerapp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:6.2-alpine
+          ports:
+            - containerPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  selector:
+    app: redis
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
+  type: ClusterIP
+
