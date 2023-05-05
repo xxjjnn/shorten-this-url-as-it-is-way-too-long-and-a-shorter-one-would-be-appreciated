@@ -1,24 +1,12 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Install stuff. I use asdf (instead of rbenv) so get ruby 3.2.1 installed. Bundle install, yarn install etc.
 
-Things you may want to cover:
+To get it kooberneeted I followed steps to install minikube. Then:
 
-* Ruby version
+docker build -t shortener .
+eval $(minikube docker-env)
+kubectl apply -f dat_app.yaml
+minikube service shortenerapp --url
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+that last one tells you the local url where your pod is running
