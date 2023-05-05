@@ -14,8 +14,7 @@ spec:
     spec:
       containers:
         - name: shortenerapp
-          image: shortener
-          imagePullPolicy: Never
+          image: 512182977566.dkr.ecr.eu-west-2.amazonaws.com/shortener:latest
           ports:
             - containerPort: 3000
 ---
@@ -30,7 +29,7 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 3000
-  type: NodePort
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
