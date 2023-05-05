@@ -7,7 +7,7 @@ export default () => (
       <div className="">
         <h1 className="">Shorten this url as it is way too long and a shorter one would be appreciated</h1>
         <p className="">
-          jsx Move over, TinyUrl, there's a new URL shortener in metaphorical-town!
+          tsx Move over, TinyUrl, there's a new URL shortener in metaphorical-town!
         </p>
       </div>
     </div>
