@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import CopyToClipboardButton from './CopyToClipboardButton';
 
 interface ShrunkenUrl {
   body: string;
 }
 
 const Home: React.FC = () => {
-  const [data, setData] = useState<ShrunkenUrl[]>([]);
+  const [data, setData] = useState<ShrunkenUrl[]>(null);
   const [input, setInput] = useState<string>('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +46,7 @@ const Home: React.FC = () => {
 	<div className="fl w-100 pv1">
 	  <h1 className="db">Shorten this url as it is way too long and a shorter one would be appreciated</h1>
 	  <p className="db">
-		tsx Move over, TinyUrl, there's a new URL shortener in metaphorical-town!
+		Move over, TinyUrl, there's a new URL shortener in metaphorical-town!
 	  </p>
       <form onSubmit={handleSubmit}>
         <input className='db w-100' type="text" value={input} onChange={handleInputChange} />
@@ -53,9 +54,12 @@ const Home: React.FC = () => {
           Shortenification
         </button>
       </form>
-      <span className='db'>
-        {data}
-      </span>
+      { data && <div className='db pt4'>
+          <span className='db pb1'>Success!</span>
+          {data}
+          <CopyToClipboardButton text={data} />
+        </div>
+      }
     </div>
   );
 };
