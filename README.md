@@ -19,3 +19,5 @@ aws ecr get-login-password --region eu-west-2 | docker login --username AWS --pa
 docker tag shortener:latest 512182977566.dkr.ecr.eu-west-2.amazonaws.com/shortener:latest
 docker push 512182977566.dkr.ecr.eu-west-2.amazonaws.com/shortener:latest
 kubectl apply -f dat_app.yaml
+kubectl get svc
+
