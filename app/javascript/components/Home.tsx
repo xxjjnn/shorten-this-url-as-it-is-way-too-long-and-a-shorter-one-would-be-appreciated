@@ -58,6 +58,7 @@ const Home: React.FC = () => {
           <span className='db pb1'>Success!</span>
           {data}
           <CopyToClipboardButton text={data} />
+          <span className='db pv1'>Note: it expires after 600 seconds. Get the paid version (coming... soon?) to increase it to 601 seconds!</span>
         </div>
       }
     </div>

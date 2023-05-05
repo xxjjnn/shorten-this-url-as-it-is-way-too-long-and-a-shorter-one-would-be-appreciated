@@ -32,14 +32,15 @@ describe ShortenController do
 
   describe "GET show" do
     it 'fetches the value' do
-      $redis.set('hello', 'world', ex: 30)
+      $redis.set('hello', 'http://www.example.com/world', ex: 30)
       get :show, params: { key: 'hello' }
 
-      expect(JSON.parse(response.body)['data']).to eq 'world'
+      expect(response).to have_http_status(:redirect)
+      expect(response).to redirect_to('http://www.example.com/world')
 
-      get :show, params: { key: 'blargle' }
-
-      expect(JSON.parse(response.body)['data']).to be_nil
+      expect {
+        get :show, params: { key: 'blargle' }
+      }.to raise_error(ActionController::ActionControllerError)
     end
   end
 end

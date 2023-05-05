@@ -1,6 +1,6 @@
 class ShortenController < ApplicationController
   RANDOMSTRING='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'.split('').map(&:freeze).freeze
-  EXPIRY=20
+  EXPIRY=600
 
   def create
     key = set_redis_value_and_return_key(params['data'])
@@ -10,7 +10,7 @@ class ShortenController < ApplicationController
   end
 
   def show
-    render json: {data: $redis.get(params['key'])}
+    redirect_to($redis.get(params['key']), allow_other_host: true)
   end
 
   private
