@@ -1,0 +1,11 @@
+development:
+  adapter: redis
+  url: redis://localhost:6379/1
+
+test:
+  adapter: test
+
+production:
+  adapter: redis
+  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
+  channel_prefix: shorten_this_url_as_it_is_way_too_long_and_a_shorter_one_would_be_appreciated_production
